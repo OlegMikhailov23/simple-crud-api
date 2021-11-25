@@ -1,19 +1,18 @@
 const Person = require('../models/personModel');
 const { getPostData } = require('../utils');
 
-// @route GET /api/getAllDocks
-console.log(Person);
+// @route GET /api/person
 const getPersons = async(req, res) => {
     try {
         const persons = await Person.findAllPersons();
         res.writeHead(200, { 'Content-Type' : 'application/json' });
         res.end(JSON.stringify(persons));
     } catch (e) {
-        console.log(e);
+        throw new Error(e);
     }
 }
 
-// @route GET /api/getAllDocks/:id
+// @route GET /api/person/:id
 
 const getPerson = async(req, res, id) => {
     try {
@@ -26,17 +25,15 @@ const getPerson = async(req, res, id) => {
             res.end(JSON.stringify(person));
         }
     } catch (e) {
-        console.log(e);
+        throw new Error(e);
     }
 }
 
-// @route POST /api/create
+// @route POST /api/person
 
 const createPerson = async(req, res) => {
     try {
         const body = await getPostData(req);
-        console.log(body);
-
         const {name, age, hobbies} = JSON.parse(body);
 
         const person = {
@@ -50,11 +47,11 @@ const createPerson = async(req, res) => {
         return res.end(JSON.stringify(newPerson));
 
     } catch (e) {
-        console.log(e);
+        throw new Error(e);
     }
 }
 
-// @route PUT /api/update/:id
+// @route PUT /api/person/:id
 
 const updatePerson = async(req, res, id) => {
     try {
@@ -66,8 +63,6 @@ const updatePerson = async(req, res, id) => {
             res.end(JSON.stringify({ message: 'person does not exist!' }));
         } else {
             const body = await getPostData(req);
-            console.log(body);
-
             const {name, age, hobbies} = JSON.parse(body);
 
             const personData = {
@@ -82,7 +77,25 @@ const updatePerson = async(req, res, id) => {
         }
 
     } catch (e) {
-        console.log(e);
+        throw new Error(e);
+    }
+}
+
+// @route DELETE /api/person/:id
+
+const deletePerson = async(req, res, id) => {
+    try {
+        const person = await Person.findPerson(id);
+        if (!person) {
+            res.writeHead(404, { 'Content-Type' : 'application/json' });
+            res.end(JSON.stringify({ message: 'person does not exist!' }));
+        } else {
+            await Person.remove(id);
+            res.writeHead(200, { 'Content-Type' : 'application/json' });
+            res.end(JSON.stringify({message: `Person ${id} has been deleted!`}));
+        }
+    } catch (e) {
+        throw new Error(e);
     }
 }
 
@@ -90,5 +103,6 @@ module.exports = {
     getPersons,
     getPerson,
     createPerson,
-    updatePerson
+    updatePerson,
+    deletePerson
 }
