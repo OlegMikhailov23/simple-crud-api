@@ -1,7 +1,7 @@
 const Person = require('../models/personModel');
 const { getPostData } = require('../utils');
 
-// @route GET /api/person
+// @route GET /person
 const getPersons = async(req, res) => {
     try {
         const persons = await Person.findAllPersons();
@@ -12,7 +12,7 @@ const getPersons = async(req, res) => {
     }
 }
 
-// @route GET /api/person/:id
+// @route GET /person/:id
 
 const getPerson = async(req, res, id) => {
     try {
@@ -29,12 +29,17 @@ const getPerson = async(req, res, id) => {
     }
 }
 
-// @route POST /api/person
+// @route POST /person
 
 const createPerson = async(req, res) => {
     try {
         const body = await getPostData(req);
         const {name, age, hobbies} = JSON.parse(body);
+
+        if (!name || !age || !hobbies) {
+            res.writeHead(400, { 'Content-Type' : 'application/json' })
+            return res.end(JSON.stringify({message: 'invalid fields or value'}));
+        }
 
         const person = {
             name,
@@ -51,11 +56,10 @@ const createPerson = async(req, res) => {
     }
 }
 
-// @route PUT /api/person/:id
+// @route PUT /person/:id
 
 const updatePerson = async(req, res, id) => {
     try {
-
         const person = await Person.findPerson(id);
 
         if (!person) {
@@ -81,7 +85,7 @@ const updatePerson = async(req, res, id) => {
     }
 }
 
-// @route DELETE /api/person/:id
+// @route DELETE /person/:id
 
 const deletePerson = async(req, res, id) => {
     try {

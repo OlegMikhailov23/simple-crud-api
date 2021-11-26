@@ -7,7 +7,8 @@
     "start": "node server.js",
     "start:dev": "nodemon server.js",
     "build": "webpack --progress",
-    "start:prod": "npm run build && node ./dist/bundle.js"
+    "start:prod": "npm run build && node ./dist/bundle.js",
+    "test": "cross-env NODE_ENV=test jest --testTimeout=10000 --detectOpenHandles"
   },
   "repository": {
     "type": "git",
@@ -21,14 +22,21 @@
   "homepage": "https://github.com/OlegMikhailov23/simple-crud-api#readme",
   "devDependencies": {
     "clean-webpack-plugin": "^4.0.0",
-    "dev-cli": "^0.0.0",
+    "cross-env": "^7.0.3",
+    "jest": "^27.3.1",
     "nodemon": "^2.0.15",
-    "uglifyjs-webpack-plugin": "^2.2.0",
+    "supertest": "^6.1.6",
     "webpack": "^5.64.4",
     "webpack-cli": "^4.9.1"
   },
   "dependencies": {
     "dotenv": "^10.0.0",
     "uuid": "^8.3.2"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
   }
 }
