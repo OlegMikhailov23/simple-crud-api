@@ -5,15 +5,15 @@ const { getPersons, getPerson, createPerson, updatePerson, deletePerson } = requ
 const server = http.createServer((req, res) => {
     if (req.url === '/api/person' && req.method === 'GET') {
         getPersons(req, res);
-    } else if (req.url.match(/\/api\/person\/([0-9]+)/) && req.method === 'GET') {
+    } else if (req.url.match(/\/api\/person\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/) && req.method === 'GET') {
         const id = req.url.split('/')[3];
         getPerson(req, res, id);
     } else if (req.url === '/api/person' && req.method === 'POST') {
         createPerson(req, res);
-    } else if (req.url.match(/\/api\/person\/([0-9]+)/) && req.method === 'PUT') {
+    } else if (req.url.match(/\/api\/person\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/) && req.method === 'PUT') {
         const id = req.url.split('/')[3];
         updatePerson(req, res, id)
-    } else if (req.url.match(/\/api\/person\/([0-9]+)/) && req.method === 'DELETE') {
+    } else if (req.url.match(/\/api\/person\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/) && req.method === 'DELETE') {
         const id = req.url.split('/')[3];
         deletePerson(req, res, id)
     } else {
