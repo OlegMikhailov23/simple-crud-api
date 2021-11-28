@@ -1,7 +1,7 @@
 const request = require('supertest')
 const app = require('../server.js')
 
-describe('Post Endpoints', () => {
+describe('Check APP E2E', () => {
     afterAll(async () => {
         await app.close()
     })
