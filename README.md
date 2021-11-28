@@ -2,13 +2,13 @@
 
 A simple CRUD API using in-memory database underneath.
 
-##Installation and run app.:
+## Installation and run app.:
 1) install all dependencies : `$ npm i`;
 2) download API tool postman : https://www.postman.com/downloads/;
 3) open command line and run app : `$ npm run sart:dev` for development or `$ npm run sart:prod` for production;
 4) For testing app use : `$ npm run test`
 
-##Usage:
+## Usage:
 
 API path `/person`:
     * **GET** `/person` or `/person/${personId}` should return all persons or person with corresponding `personId`
